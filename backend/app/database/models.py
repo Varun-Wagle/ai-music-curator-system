@@ -43,6 +43,20 @@ class AudioFeatures(Base):
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+class SongRating(Base):
+    __tablename__ = "song_ratings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    song_id = Column(Integer, ForeignKey("songs.id"))
+
+    quality_score = Column(Float)
+    energy_score = Column(Float)
+    virality_score = Column(Float)
+
+    recommended_playlist = Column(String)
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
     # danceability = Column(Float)
     # energy = Column(Float)
     # key = Column(Integer)

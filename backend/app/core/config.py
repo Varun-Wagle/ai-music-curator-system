@@ -9,3 +9,5 @@ if DATABASE_URL is None:
     raise ValueError("DATABASE_URL is not set in .env file")
 
 UPLOAD_DIR = os.getenv("UPLOAD_DIR", "data/uploads")
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")

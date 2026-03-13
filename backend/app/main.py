@@ -1,9 +1,11 @@
 from fastapi import FastAPI
+
 from backend.app.database.db import Base, engine
 from backend.app.database import models
 from backend.app.api.routes import submission
 from backend.app.services.audio_analysis import analyze_audio
 from backend.app.api.routes import analysis
+from backend.app.services.song_rating import rate_song
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -43,3 +45,16 @@ def test_db():
     except:
         return {"error": "Database connection failed"}
     
+@app.get("/ai-rate-test")
+def ai_rate_test():
+    sample_features = {
+        "tempo": 120,
+        "rms_energy": 0.25,
+        "spectral_centroid": 2200,
+        "spectral_bandwidth": 2400,
+        "chroma_mean": 0.40
+    }
+
+    result = rate_song(sample_features)
+
+    return {"rating": result}
