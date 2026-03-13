@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.sql import func
 from backend.app.database.db import Base
-
+from sqlalchemy import Float
 
 class Artist(Base):
     __tablename__ = "artists"
@@ -25,3 +25,28 @@ class Song(Base):
     file_path = Column(String)
     status = Column(String, default="pending")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class AudioFeatures(Base):
+    __tablename__ = "audio_features"
+
+    id = Column(Integer, primary_key=True, index=True)
+    song_id = Column(Integer, ForeignKey("songs.id"))
+
+    tempo = Column(Float)
+    duration = Column(Float)
+    spectral_centroid = Column(Float)
+    zero_crossing_rate = Column(Float)
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    # danceability = Column(Float)
+    # energy = Column(Float)
+    # key = Column(Integer)
+    # loudness = Column(Float)
+    # mode = Column(Integer)
+    # speechiness = Column(Float)
+    # acousticness = Column(Float)
+    # instrumentalness = Column(Float)
+    # liveness = Column(Float)
+    # valence = Column(Float)
+    # tempo = Column(Float)
