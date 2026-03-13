@@ -3,6 +3,7 @@ from backend.app.database.db import Base, engine
 from backend.app.database import models
 from backend.app.api.routes import submission
 from backend.app.services.audio_analysis import analyze_audio
+from backend.app.api.routes import analysis
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -16,6 +17,7 @@ Base.metadata.create_all(bind=engine)
 
 # Register routes
 app.include_router(submission.router)
+app.include_router(analysis.router)
 
 @app.get("/")
 def root():

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Float
 from sqlalchemy.sql import func
 from backend.app.database.db import Base
 from sqlalchemy import Float
@@ -36,6 +36,10 @@ class AudioFeatures(Base):
     duration = Column(Float)
     spectral_centroid = Column(Float)
     zero_crossing_rate = Column(Float)
+
+    rms_energy = Column(Float)
+    spectral_bandwidth = Column(Float)
+    chroma_mean = Column(Float)
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
