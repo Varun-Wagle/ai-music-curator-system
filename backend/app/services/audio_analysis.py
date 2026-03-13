@@ -1,5 +1,8 @@
 import librosa
 import numpy as np
+from sqlalchemy.orm import Session
+from backend.app.database.models import AudioFeatures, Song
+from backend.app.database.db import SessionLocal
 
 
 def analyze_audio(file_path: str):
@@ -46,3 +49,34 @@ def analyze_audio(file_path: str):
         "spectral_bandwidth": spectral_bandwidth_mean,
         "chroma_mean": chroma_mean
     }
+
+def analyze_and_store(song_id: int):
+
+    db = SessionLocal()
+
+    try:
+        song = db.query(Song).filter(Song.id == song_id).first()
+
+        if not song:
+            return {"error": "Song not found"}
+
+        file_path = str(song.file_path)
+
+        features = analyze_audio(file_path)
+
+        audio_features = AudioFeatures(
+            song_id=song_id,
+            tempo=features["tempo"],
+            duration=features["duration"],
+            spectral_centroid=features["spectral_centroid"],
+            zero_crossing_rate=features["zero_crossing_rate"],
+            rms_energy=features["rms_energy"],
+            spectral_bandwidth=features["spectral_bandwidth"],
+            chroma_mean=features["chroma_mean"]
+        )
+
+        db.add(audio_features)
+        db.commit()
+
+    finally:
+        db.close()
