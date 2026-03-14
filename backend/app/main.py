@@ -6,6 +6,7 @@ from backend.app.api.routes import submission
 from backend.app.services.audio_analysis import analyze_audio
 from backend.app.api.routes import analysis
 from backend.app.services.song_rating import rate_song
+from backend.app.api.routes.rating import router as rating_router
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -20,6 +21,7 @@ Base.metadata.create_all(bind=engine)
 # Register routes
 app.include_router(submission.router)
 app.include_router(analysis.router)
+app.include_router(rating_router)
 
 @app.get("/")
 def root():

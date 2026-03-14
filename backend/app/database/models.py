@@ -57,14 +57,3 @@ class SongRating(Base):
 
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-    # danceability = Column(Float)
-    # energy = Column(Float)
-    # key = Column(Integer)
-    # loudness = Column(Float)
-    # mode = Column(Integer)
-    # speechiness = Column(Float)
-    # acousticness = Column(Float)
-    # instrumentalness = Column(Float)
-    # liveness = Column(Float)
-    # valence = Column(Float)
-    # tempo = Column(Float)
